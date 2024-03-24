@@ -1,71 +1,53 @@
 #include "Item.h"
-#include <fstream>
-#include <iomanip>
 #include <iostream>
 
-std::vector<Item> Item::items;
-
-Item::Item(): recipient("Unknown"), value(0), date(0), costToShip(0)
+Item::Item():
+    recipient("Unknown"), value(0), date(0), costToShip(0), reward(0.0)
 {
 }
 
-Item::Item(const std::string& recipient, int value, int date, int costToShip):
-    recipient(recipient), value(value), date(date), costToShip(costToShip)
+Item::Item(const std::string& rec, int v, int d, int c):
+    recipient(rec), value(v), date(d), costToShip(c)
 {
+  calculateReward();
+}
+std::string Item::getRecipient() const
+{
+  return recipient;
 }
 
-void Item::addItem()
+int Item::getValue() const
 {
-  std::string recipient;
-  int value, date, costToShip;
-  std::cout << "Enter recipient, value, date (mmddyy), and cost to ship: ";
-  std::cin >> recipient >> value >> date >> costToShip;
-  items.emplace_back(recipient, value, date, costToShip);
+  return value;
 }
 
-void Item::printItems()
+int Item::getDate() const
 {
-  for (const auto& item : items) {
-    std::cout << "Recipient: " << item.recipient << ", Value: " << item.value
-              << ", Date: " << item.date
-              << ", Cost to Ship: " << item.costToShip << std::endl;
+  return date;
+}
+
+int Item::getCostToShip() const
+{
+  return costToShip;
+}
+int Item::getReward() const
+{
+  return reward;
+}
+void Item::calculateReward()
+{
+  if (value <= 10000) {
+    reward = 0.02 * value;
+  } else if (value >= 50000) {
+    reward = 0.015 * value;
+  } else {
+    reward = 0.0175 * value;
   }
 }
 
-void Item::exportToFile(const std::string& filename)
+void Item::printItem() const
 {
-  std::ofstream file(filename);
-  if (!file.is_open()) {
-    std::cerr << "Failed to open file: " << filename << std::endl;
-    return;
-  }
-  for (const auto& item : items) {
-    file << item.recipient << " " << item.value << " " << item.date << " "
-         << item.costToShip << std::endl;
-  }
-  file.close();
-}
-
-int Item::getTotalCost()
-{
-  int total = 0;
-  for (const auto& item : items) {
-    total += item.costToShip;
-  }
-  return total;
-}
-
-void Item::printValueResult()
-{
-  for (const auto& item : items) {
-    std::cout << "Recipient: " << item.recipient << ", Value: " << item.value;
-    if (item.value >= 10000 && item.value <= 50000) {
-      std::cout << ", Result: 1.75%";
-    } else if (item.value < 10000) {
-      std::cout << ", Result: 2%";
-    } else {
-      std::cout << ", Result: 1.5%";
-    }
-    std::cout << std::endl;
-  }
+  std::cout << "Recipient: " << recipient << ", Value: " << value
+            << ", Date: " << date << ", Cost to Ship: " << costToShip
+            << ", Reward: " << reward << std::endl;
 }
