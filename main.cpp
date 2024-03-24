@@ -1,21 +1,29 @@
-#include "Item.h"
+#include "Manager.h"
+#include <iostream>
+#include <sstream>
+
 int main()
 {
-  // Add some items
-  Item::addItem();
-  Item::addItem();
+  Manager manager;
+  std::string line;
 
-  // Print all items
-  Item::printItems();
+  std::cout << "Enter item details (recipient, value, date, cost to ship) "
+               "separated by spaces: ";
+  std::getline(std::cin, line);
 
-  // Export items to a file
-  Item::exportToFile("items.txt");
+  std::stringstream ss(line);
+  std::string recipient;
+  int value, date, costToShip;
 
-  // Print the total cost
-  std::cout << "Total Cost: " << Item::getTotalCost() << std::endl;
+  ss >> recipient >> value >> date >> costToShip;
 
-  // Print the value result for each item
-  Item::printValueResult();
+  Item newItem(recipient, value, date, costToShip);
+  manager.addItem(newItem);
+
+  std::cout << "Added item details:\n";
+  manager.printAllItems();
+  // Export item details to a text file
+  manager.exportToFile("items.txt");
 
   return 0;
 }
