@@ -2,26 +2,28 @@
 #define ITEM_H
 
 #include <string>
-#include <vector>
 
 class Item {
-public:
+private:
   std::string recipient;
   int value;
   int date; // Format: mmddyy
   int costToShip;
+  double reward;
 
+public:
   Item();
-  Item(const std::string& recipient, int value, int date, int costToShip);
+  Item(const std::string& rec, int v, int d, int c);
 
-  static void addItem();
-  static void printItems();
-  static void exportToFile(const std::string& filename);
-  static int getTotalCost();
-  static void printValueResult();
+  std::string getRecipient() const;
+  int getValue() const;
+  int getDate() const;
+  int getCostToShip() const;
+  int getReward() const;
 
-private:
-  static std::vector<Item> items;
+  // Additional member functions
+  void calculateReward();
+  void printItem() const;
 };
 
 #endif // ITEM_H
