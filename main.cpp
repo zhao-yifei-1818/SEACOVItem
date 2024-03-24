@@ -1,5 +1,4 @@
 #include "Item.h"
-using namespace std;
 int main()
 {
   // Add some items
