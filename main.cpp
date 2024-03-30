@@ -1,4 +1,5 @@
 #include "Manager.h"
+#include "Item.h"
 #include <iostream>
 #include <sstream>
 
