@@ -6,7 +6,9 @@ int main()
 {
   Manager manager;
   std::string line;
-
+  int selection = 0;
+  while(selection != 0){
+    if (selection == 1){
   std::cout << "Enter item details (recipient, value, date, cost to ship) "
                "separated by spaces: ";
   std::getline(std::cin, line);
@@ -23,7 +25,19 @@ int main()
   std::cout << "Added item details:\n";
   manager.printAllItems();
   // Export item details to a text file
-  manager.exportToFile("items.txt");
+    }
+    else if (selection == 2){
+      manager.readFromFile("items.txt");
+    }
+    else if (selection == 3){
+    manager.printAllItems();
+
+    }
+    else if (selection == 4){
+    manager.exportToFile("items.txt");
+
+    }
+  }
 
   return 0;
 }
