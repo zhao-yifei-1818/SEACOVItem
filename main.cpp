@@ -8,6 +8,7 @@ int main()
   std::string line;
   int selection = 0;
   while(selection != 0){
+    std::cout << "Input an Action number:\n1: Add Item\n2: Load from Item.txt3: printAll()4: Export to Item.txt\nInput: "<< std::endl;
     if (selection == 1){
   std::cout << "Enter item details (recipient, value, date, cost to ship) "
                "separated by spaces: ";
